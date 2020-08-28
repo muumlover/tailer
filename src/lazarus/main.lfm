@@ -1,9 +1,9 @@
-object Form1: TForm1
-  Left = 682
+object MainForm: TMainForm
+  Left = 669
   Height = 335
-  Top = 148
+  Top = 114
   Width = 417
-  Caption = 'Form1'
+  Caption = 'MessageTool'
   ClientHeight = 335
   ClientWidth = 417
   LCLVersion = '2.0.10.0'

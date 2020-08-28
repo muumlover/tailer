@@ -4,5 +4,5 @@
 package gui
 
 //::private::
-type TForm1Fields struct {
+type TConnectFormFields struct {
 }
