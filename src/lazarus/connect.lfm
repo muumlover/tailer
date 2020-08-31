@@ -33,14 +33,5 @@ object ConnectForm: TConnectForm
       TabOrder = 0
       Text = 'ComboBox1'
     end
-    object ComboBoxEx1: TComboBoxEx
-      Left = 96
-      Height = 24
-      Top = 40
-      Width = 100
-      ItemHeight = 16
-      ItemsEx = <>
-      TabOrder = 1
-    end
   end
 end

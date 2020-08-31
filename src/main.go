@@ -8,5 +8,6 @@ import (
 func main() {
 	vcl.Application.Initialize()
 	vcl.Application.CreateForm(&gui.MainForm)
+	vcl.Application.CreateForm(&gui.ConnectForm)
 	vcl.Application.Run()
 }

@@ -4,17 +4,23 @@ object MainForm: TMainForm
   Top = 114
   Width = 417
   Caption = 'MessageTool'
-  ClientHeight = 335
+  ClientHeight = 315
   ClientWidth = 417
+  Menu = MainMenu
   LCLVersion = '2.0.10.0'
   object Memo1: TMemo
     Left = 8
-    Height = 320
+    Height = 296
     Top = 8
     Width = 400
     Lines.Strings = (
       'Memo1'
     )
     TabOrder = 0
+  end
+  object MainMenu: TMainMenu
+    object ConnectItem: TMenuItem
+      Caption = 'Connect'
+    end
   end
 end

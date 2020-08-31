@@ -1,0 +1,4 @@
+/.idea/**
+/src/lazarus/*.exe
+/src/lazarus/backup/**
+/src/lazarus/lib/**

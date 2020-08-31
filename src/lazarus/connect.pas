@@ -14,7 +14,6 @@ type
 
   TConnectForm = class(TForm)
     ComboBox1: TComboBox;
-    ComboBoxEx1: TComboBoxEx;
     ListBox1: TListBox;
     Panel1: TPanel;
   private

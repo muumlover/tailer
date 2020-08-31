@@ -3,6 +3,16 @@
 
 package gui
 
+import "github.com/ying32/govcl/vcl"
+
 //::private::
 type TMainFormFields struct {
+}
+
+func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
+	f.ConnectItem.SetOnClick(f.OnConnectItemClick)
+}
+
+func (f *TMainForm) OnConnectItemClick(sender vcl.IObject) {
+	ConnectForm.ShowModal()
 }
