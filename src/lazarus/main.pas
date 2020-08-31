@@ -13,10 +13,10 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
-    ButtonFormat: TButton;
-    Button2: TButton;
-    ComboBox1: TComboBox;
-    ComboBox2: TComboBox;
+    BtnFormat: TButton;
+    Btn2: TButton;
+    CBProtocols: TComboBox;
+    CB2: TComboBox;
     ListBox1: TListBox;
     MainMenu: TMainMenu;
     Memo1: TMemo;

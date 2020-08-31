@@ -18,7 +18,7 @@ object MainForm: TMainForm
     )
     TabOrder = 0
   end
-  object ButtonFormat: TButton
+  object BtnFormat: TButton
     Left = 248
     Height = 25
     Top = 8
@@ -34,31 +34,31 @@ object MainForm: TMainForm
     ItemHeight = 0
     TabOrder = 2
   end
-  object Button2: TButton
+  object Btn2: TButton
     Left = 333
     Height = 25
     Top = 8
     Width = 75
-    Caption = 'Button2'
+    Caption = 'Btn2'
     TabOrder = 3
   end
-  object ComboBox1: TComboBox
+  object CBProtocols: TComboBox
     Left = 8
     Height = 25
     Top = 8
     Width = 104
     ItemHeight = 17
     TabOrder = 4
-    Text = 'ComboBox1'
+    Text = 'SelectProtocol'
   end
-  object ComboBox2: TComboBox
+  object CB2: TComboBox
     Left = 120
     Height = 25
     Top = 8
     Width = 104
     ItemHeight = 17
     TabOrder = 5
-    Text = 'ComboBox2'
+    Text = 'CB2'
   end
   object MainMenu: TMainMenu
     object ConnectItem: TMenuItem

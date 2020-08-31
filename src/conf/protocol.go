@@ -25,12 +25,7 @@ type TProtocols []TProtocol
 
 var Protocols *TProtocols
 
-func (p *TProtocols) NewProtocols(path string) (protocols *TProtocols) {
-	Protocol.NewProtocol("s")
-	return
-}
-
-func (p *TProtocols) Load() ([]*TProtocol, error) {
+func (p *TProtocols) NewProtocols() ([]*TProtocol, error) {
 	var confPath = configPath(ProtocolPath)
 	if _, err := os.Stat(confPath); os.IsNotExist(err) {
 		err = os.Mkdir(confPath, os.ModeDir)

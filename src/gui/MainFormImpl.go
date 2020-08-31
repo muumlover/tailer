@@ -13,23 +13,25 @@ import (
 
 //::private::
 type TMainFormFields struct {
+	protocols []*conf.TProtocol
 }
 
 func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 	f.ScreenCenter()
 	f.ConnectItem.SetOnClick(f.onConnectItemClick)
 	f.TestItem.SetOnClick(f.onTestItemClick)
-	f.ButtonFormat.SetOnClick(f.onButtonFormatClick)
-	f.Button2.SetOnClick(f.onButton2Click)
+	f.BtnFormat.SetOnClick(f.onBtnFormatClick)
+	f.Btn2.SetOnClick(f.onBtn2Click)
 
-	protocols, err := conf.Protocols.Load()
+	var err error
+	f.protocols, err = conf.Protocols.NewProtocols()
 	if err != nil {
 		fmt.Println("Protocols Load Error:", err)
 		vcl.ShowMessage(err.Error())
 	}
-	for _, v := range protocols {
-		fmt.Println("Protocols Load Error:", v)
-		f.ComboBox1.AddItem(v.Name, f.ComboBox1)
+	for _, v := range f.protocols {
+		fmt.Println("Protocols Load:", v)
+		f.CBProtocols.AddItem(v.Name, f.CBProtocols)
 	}
 }
 
@@ -44,8 +46,8 @@ func (f *TMainForm) onTestItemClick(sender vcl.IObject) {
 	conf.Configuration.Save()
 }
 
-//onButtonFormatClick 内容校验与格式化
-func (f *TMainForm) onButtonFormatClick(sender vcl.IObject) {
+//onBtnFormatClick 内容校验与格式化
+func (f *TMainForm) onBtnFormatClick(sender vcl.IObject) {
 	data := f.Memo1.Text()
 	var out bytes.Buffer
 	err := json.Indent(&out, []byte(data), "", "    ")
@@ -57,6 +59,6 @@ func (f *TMainForm) onButtonFormatClick(sender vcl.IObject) {
 	}
 }
 
-func (f *TMainForm) onButton2Click(sender vcl.IObject) {
+func (f *TMainForm) onBtn2Click(sender vcl.IObject) {
 
 }
