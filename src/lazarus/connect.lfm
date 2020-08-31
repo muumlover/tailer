@@ -3,6 +3,8 @@ object ConnectForm: TConnectForm
   Height = 240
   Top = 115
   Width = 320
+  BorderIcons = [biSystemMenu, biHelp]
+  BorderStyle = bsDialog
   Caption = 'ConnectManage'
   ClientHeight = 240
   ClientWidth = 320

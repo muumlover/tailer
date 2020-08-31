@@ -13,6 +13,7 @@ object MainForm: TMainForm
     Height = 176
     Top = 40
     Width = 400
+    Anchors = [akTop, akLeft, akRight, akBottom]
     Lines.Strings = (
       'Memo1'
     )
@@ -31,6 +32,7 @@ object MainForm: TMainForm
     Height = 80
     Top = 224
     Width = 400
+    Anchors = [akLeft, akRight, akBottom]
     ItemHeight = 0
     TabOrder = 2
   end

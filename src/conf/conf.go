@@ -8,16 +8,14 @@ import (
 
 var configurationPath = "test.json"
 
-type TConfiguration struct {
-	Enabled bool
-	Path    string
+type Configuration struct {
+	Enabled  bool
+	Path     string
+	Connects []*Connect
 }
 
-//Configuration
-var Configuration = new(TConfiguration)
-
 //Load 读取设置
-func (c *TConfiguration) Load() {
+func (c *Configuration) Load() {
 	var confPath = configPath(configurationPath)
 	if _, err := os.Stat(confPath); os.IsNotExist(err) {
 		c.Enabled = false
@@ -38,7 +36,7 @@ func (c *TConfiguration) Load() {
 }
 
 //Save 保存设置
-func (c *TConfiguration) Save() {
+func (c *Configuration) Save() {
 	var confPath = configPath(configurationPath)
 	file, err := os.Create(confPath)
 	if err != nil {

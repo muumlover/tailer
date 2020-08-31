@@ -13,7 +13,8 @@ import (
 
 //::private::
 type TMainFormFields struct {
-	protocols []*conf.Protocol
+	configuration *conf.Configuration
+	protocols     []*conf.Protocol
 }
 
 //OnFormCreate
@@ -24,6 +25,7 @@ func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 	f.BtnFormat.SetOnClick(f.onBtnFormatClick)
 	f.Btn2.SetOnClick(f.onBtn2Click)
 
+	f.configuration.Load()
 	var err error
 	//读取所有协议
 	f.protocols, err = conf.NewProtocols()
@@ -45,8 +47,8 @@ func (f *TMainForm) onConnectItemClick(sender vcl.IObject) {
 
 //onTestItemClick
 func (f *TMainForm) onTestItemClick(sender vcl.IObject) {
-	conf.Configuration.Load()
-	conf.Configuration.Save()
+	f.configuration.Load()
+	f.configuration.Save()
 }
 
 //onBtnFormatClick 内容校验与格式化
