@@ -59,8 +59,8 @@ object MainForm: TMainForm
     Top = 8
     Width = 104
     ItemHeight = 17
+    Style = csDropDownList
     TabOrder = 5
-    Text = 'CB2'
   end
   object MainMenu: TMainMenu
     object ConnectItem: TMenuItem
