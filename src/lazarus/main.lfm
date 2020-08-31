@@ -47,6 +47,8 @@ object MainForm: TMainForm
     Height = 25
     Top = 8
     Width = 104
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 17
     TabOrder = 4
     Text = 'SelectProtocol'

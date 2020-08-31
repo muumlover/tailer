@@ -13,9 +13,10 @@ import (
 
 //::private::
 type TMainFormFields struct {
-	protocols []*conf.TProtocol
+	protocols []*conf.Protocol
 }
 
+//OnFormCreate
 func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 	f.ScreenCenter()
 	f.ConnectItem.SetOnClick(f.onConnectItemClick)
@@ -24,11 +25,13 @@ func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 	f.Btn2.SetOnClick(f.onBtn2Click)
 
 	var err error
-	f.protocols, err = conf.Protocols.NewProtocols()
+	//读取所有协议
+	f.protocols, err = conf.NewProtocols()
 	if err != nil {
-		fmt.Println("Protocols Load Error:", err)
+		fmt.Println("Protocols Read Error:", err)
 		vcl.ShowMessage(err.Error())
 	}
+	//加载协议到ComboBox
 	for _, v := range f.protocols {
 		fmt.Println("Protocols Load:", v)
 		f.CBProtocols.AddItem(v.Name, f.CBProtocols)
@@ -50,7 +53,7 @@ func (f *TMainForm) onTestItemClick(sender vcl.IObject) {
 func (f *TMainForm) onBtnFormatClick(sender vcl.IObject) {
 	data := f.Memo1.Text()
 	var out bytes.Buffer
-	err := json.Indent(&out, []byte(data), "", "    ")
+	err := json.Indent(&out, []byte(data), "", "  ")
 	if err != nil {
 		fmt.Println("Json Convert Error:", err)
 		vcl.ShowMessage(err.Error())

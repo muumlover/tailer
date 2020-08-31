@@ -2,10 +2,13 @@ package conf
 
 import (
 	"os"
+	"strings"
 )
 
-func configPath(name string) string {
-	pathSep := string(os.PathSeparator)
+//configPath
+func configPath(name ...string) string {
 	home, _ := os.UserConfigDir()
-	return home + pathSep + "Tester" + pathSep + name
+	s := []string{home, "Tester"}
+	s = append(s, name...)
+	return strings.Join(s, string(os.PathSeparator))
 }

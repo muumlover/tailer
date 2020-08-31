@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -8,24 +9,32 @@ import (
 
 const ProtocolPath = "protocols"
 
-type TProtocol struct {
+type Protocol struct {
 	Name string
 	Data string
 }
 
-var Protocol *TProtocol
-
-func (p *TProtocol) NewProtocol(name string) (protocol *TProtocol) {
-	protocol = new(TProtocol)
-	protocol.Name = name
-	return protocol
+func NewProtocol(path string) (*Protocol, error) {
+	protocol := &Protocol{}
+	protocol.Name = path
+	var confPath = configPath(ProtocolPath, path)
+	file, err := os.Open(confPath)
+	if err != nil {
+		fmt.Println("Open Config Error:", err)
+		return nil, err
+	}
+	defer file.Close()
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&protocol)
+	if err != nil {
+		fmt.Println("Config Load Error:", err)
+		return nil, err
+	}
+	fmt.Println(protocol.Name)
+	return protocol, nil
 }
 
-type TProtocols []TProtocol
-
-var Protocols *TProtocols
-
-func (p *TProtocols) NewProtocols() ([]*TProtocol, error) {
+func NewProtocols() ([]*Protocol, error) {
 	var confPath = configPath(ProtocolPath)
 	if _, err := os.Stat(confPath); os.IsNotExist(err) {
 		err = os.Mkdir(confPath, os.ModeDir)
@@ -36,11 +45,15 @@ func (p *TProtocols) NewProtocols() ([]*TProtocol, error) {
 		fmt.Println("Read Protocols Error", err)
 		return nil, err
 	}
-	var protocols = make([]*TProtocol, len(files))
+	var protocols = make([]*Protocol, 0)
 	for i, v := range files {
 		fmt.Println(i, "=", v.Name())
-		t := Protocol.NewProtocol(v.Name())
-		protocols[i] = t
+		t, err := NewProtocol(v.Name())
+		if err != nil {
+			fmt.Println("Read Protocol Error", err)
+		} else {
+			protocols = append(protocols, t)
+		}
 	}
 	return protocols, nil
 }
