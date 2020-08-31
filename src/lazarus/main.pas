@@ -6,16 +6,18 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ActnList, StdCtrls,
-  Menus;
+  Menus, ComCtrls, Buttons, ExtCtrls;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    Button1: TButton;
     MainMenu: TMainMenu;
     Memo1: TMemo;
     ConnectItem: TMenuItem;
+    TestItem: TMenuItem;
   private
 
   public

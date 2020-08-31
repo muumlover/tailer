@@ -3,16 +3,41 @@
 
 package gui
 
-import "github.com/ying32/govcl/vcl"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/ying32/govcl/vcl"
+	"tailer/src/conf"
+)
 
 //::private::
 type TMainFormFields struct {
 }
 
 func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
-	f.ConnectItem.SetOnClick(f.OnConnectItemClick)
+	f.ScreenCenter()
+	f.ConnectItem.SetOnClick(f.onConnectItemClick)
+	f.TestItem.SetOnClick(f.onTestItemClick)
+	f.Button1.SetOnClick(f.onButton1Click)
 }
 
-func (f *TMainForm) OnConnectItemClick(sender vcl.IObject) {
+func (f *TMainForm) onConnectItemClick(sender vcl.IObject) {
 	ConnectForm.ShowModal()
+}
+
+func (f *TMainForm) onTestItemClick(sender vcl.IObject) {
+	conf.Configuration.Load()
+	conf.Configuration.Save()
+}
+func (f *TMainForm) onButton1Click(sender vcl.IObject) {
+	data := f.Memo1.Text()
+	var out bytes.Buffer
+	err := json.Indent(&out, []byte(data), "", "    ")
+	if err != nil {
+		fmt.Println("Json Convert Error:", err)
+		vcl.ShowMessage(err.Error())
+	} else {
+		f.Memo1.SetText(out.String())
+	}
 }
