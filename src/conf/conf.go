@@ -9,9 +9,9 @@ import (
 var configurationPath = "test.json"
 
 type Configuration struct {
-	Enabled  bool
-	Path     string
-	Connects []*Connect
+	Enabled  bool      `json:"enable"`
+	Path     string    `json:"path"`
+	Connects []Connect `json:"connects"`
 }
 
 //Load 读取设置
@@ -28,11 +28,12 @@ func (c *Configuration) Load() {
 	}
 	defer file.Close()
 	decoder := json.NewDecoder(file)
+	decoder.UseNumber()
 	err = decoder.Decode(&c)
 	if err != nil {
 		fmt.Println("Config Load Error:", err)
 	}
-	fmt.Println(c.Path)
+	fmt.Println(c)
 }
 
 //Save 保存设置

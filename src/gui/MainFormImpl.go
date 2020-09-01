@@ -15,6 +15,7 @@ import (
 type TMainFormFields struct {
 	configuration *conf.Configuration
 	protocols     []*conf.Protocol
+	protocol      *conf.Protocol
 }
 
 //OnFormCreate
@@ -38,6 +39,10 @@ func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 		fmt.Println("Protocols Load:", v)
 		f.CBProtocols.AddItem(v.Name, f.CBProtocols)
 	}
+	f.CBProtocols.SetOnExit(f.onCBProtocolsExit)
+
+	//debug
+	f.Memo1.SetText("{\n  \"gems_log_id\": 123,\n  \"size\": 12,\n  \"flag\": 0,\n  \"cmd\": 0,\n  \"param\": 0,\n  \"log_id\": 0,\n  \"attach\": 0,\n  \"checksum\": 0,\n  \"gems_data\": 0\n}")
 }
 
 //onConnectItemClick
@@ -64,6 +69,33 @@ func (f *TMainForm) onBtnFormatClick(sender vcl.IObject) {
 	}
 }
 
-func (f *TMainForm) onBtn2Click(sender vcl.IObject) {
+func (f *TMainForm) onCBProtocolsExit(sender vcl.IObject) {
+	selected := f.CBProtocols.ItemIndex()
+	fmt.Println("Protocols selected index:", selected)
+	if selected >= 0 {
+		f.protocol = f.protocols[selected]
+	} else {
+		f.protocol = nil
+	}
+}
 
+func (f *TMainForm) onBtn2Click(sender vcl.IObject) {
+	if f.protocol == nil {
+		vcl.ShowMessage("Please select protocol.")
+		return
+	}
+	data := f.Memo1.Text()
+	v := make(map[string]interface{})
+	err := json.Unmarshal([]byte(data), &v)
+	if err != nil {
+		fmt.Println("Json Unmarshal Error:", err)
+		vcl.ShowMessage(err.Error())
+		return
+	}
+	err = f.protocol.ToByte(v)
+	if err != nil {
+		fmt.Println("Protocol ToByte Error:", err)
+		vcl.ShowMessage(err.Error())
+		return
+	}
 }
