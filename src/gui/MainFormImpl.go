@@ -5,11 +5,15 @@ package gui
 
 import (
 	"bytes"
+	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"github.com/ying32/govcl/vcl"
 	"tailer/src/conf"
+	"tailer/src/util"
+	"time"
 )
+
+var logger = util.Logger
 
 //::private::
 type TMainFormFields struct {
@@ -31,13 +35,13 @@ func (f *TMainForm) OnFormCreate(sender vcl.IObject) {
 	//读取所有协议
 	f.protocols, err = conf.NewProtocols()
 	if err != nil {
-		fmt.Println("Protocols Read Error:", err)
+		logger.Println("Load Protocols Error:", err)
 		vcl.ShowMessage(err.Error())
 	}
 	//加载协议到ComboBox
 	for _, v := range f.protocols {
-		fmt.Println("Protocols Load:", v)
 		f.CBProtocols.AddItem(v.Name, f.CBProtocols)
+		logger.Println("Protocol Added:", v.Name)
 	}
 	f.CBProtocols.SetOnExit(f.onCBProtocolsExit)
 
@@ -62,7 +66,7 @@ func (f *TMainForm) onBtnFormatClick(sender vcl.IObject) {
 	var out bytes.Buffer
 	err := json.Indent(&out, []byte(data), "", "  ")
 	if err != nil {
-		fmt.Println("Json Convert Error:", err)
+		logger.Println("Json Convert Error:", err)
 		vcl.ShowMessage(err.Error())
 	} else {
 		f.Memo1.SetText(out.String())
@@ -71,7 +75,7 @@ func (f *TMainForm) onBtnFormatClick(sender vcl.IObject) {
 
 func (f *TMainForm) onCBProtocolsExit(sender vcl.IObject) {
 	selected := f.CBProtocols.ItemIndex()
-	fmt.Println("Protocols selected index:", selected)
+	logger.Println("Protocols selected index:", selected)
 	if selected >= 0 {
 		f.protocol = f.protocols[selected]
 	} else {
@@ -88,14 +92,26 @@ func (f *TMainForm) onBtn2Click(sender vcl.IObject) {
 	v := make(map[string]interface{})
 	err := json.Unmarshal([]byte(data), &v)
 	if err != nil {
-		fmt.Println("Json Unmarshal Error:", err)
+		logger.Println("Json Unmarshal Error:", err)
 		vcl.ShowMessage(err.Error())
 		return
 	}
-	err = f.protocol.ToByte(v)
+	dataBytes, err := f.protocol.ToByte(v)
 	if err != nil {
-		fmt.Println("Protocol ToByte Error:", err)
+		logger.Println("Protocol ToByte Error:", err)
 		vcl.ShowMessage(err.Error())
 		return
 	}
+	logger.Println("Bytes: ", hex.EncodeToString(dataBytes))
+	//items := f.ListBox1.Items()
+	//items.Insert(0, hex.EncodeToString(dataBytes))
+	//f.ListBox1.SetItems(items)
+	f.StringGrid1.InsertColRow(false, 0)
+	f.StringGrid1.SetCells(0, 0, f.protocol.Name)
+	f.StringGrid1.SetCells(1, 0, time.Now().Format("01/02 15:04:05.000"))
+	f.StringGrid1.SetCells(2, 0, hex.EncodeToString(dataBytes))
+	f.StringGrid1.ClearSelections()
+	//f.StringGrid1.SetRowCount(f.StringGrid1.RowCount() + 1)
+	//f.StringGrid1.SetCells(0, f.StringGrid1.RowCount()-1, f.protocol.Name)
+	//f.StringGrid1.SetCells(1, f.StringGrid1.RowCount()-1, hex.EncodeToString(dataBytes))
 }

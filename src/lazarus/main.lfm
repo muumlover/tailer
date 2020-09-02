@@ -1,40 +1,20 @@
 object MainForm: TMainForm
-  Left = 669
-  Height = 335
-  Top = 114
-  Width = 417
+  Left = 514
+  Height = 513
+  Top = 112
+  Width = 680
   Caption = 'MessageTool'
-  ClientHeight = 315
-  ClientWidth = 417
+  ClientHeight = 493
+  ClientWidth = 680
   Menu = MainMenu
   LCLVersion = '2.0.10.0'
-  object Memo1: TMemo
-    Left = 8
-    Height = 176
-    Top = 40
-    Width = 400
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    Lines.Strings = (
-      'Memo1'
-    )
-    TabOrder = 0
-  end
   object BtnFormat: TButton
     Left = 248
     Height = 25
     Top = 8
     Width = 75
     Caption = 'Format'
-    TabOrder = 1
-  end
-  object ListBox1: TListBox
-    Left = 8
-    Height = 80
-    Top = 224
-    Width = 400
-    Anchors = [akLeft, akRight, akBottom]
-    ItemHeight = 0
-    TabOrder = 2
+    TabOrder = 0
   end
   object Btn2: TButton
     Left = 333
@@ -42,7 +22,7 @@ object MainForm: TMainForm
     Top = 8
     Width = 75
     Caption = 'Btn2'
-    TabOrder = 3
+    TabOrder = 1
   end
   object CBProtocols: TComboBox
     Left = 8
@@ -52,7 +32,7 @@ object MainForm: TMainForm
     AutoComplete = True
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 17
-    TabOrder = 4
+    TabOrder = 2
     Text = 'SelectProtocol'
   end
   object CB2: TComboBox
@@ -62,7 +42,101 @@ object MainForm: TMainForm
     Width = 104
     ItemHeight = 17
     Style = csDropDownList
+    TabOrder = 3
+  end
+  object Panel1: TPanel
+    Left = 8
+    Height = 352
+    Top = 40
+    Width = 661
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    Caption = 'Panel1'
+    ClientHeight = 352
+    ClientWidth = 661
+    TabOrder = 4
+    object Splitter1: TSplitter
+      Left = 180
+      Height = 352
+      Top = 0
+      Width = 5
+    end
+    object Panel2: TPanel
+      Left = 0
+      Height = 352
+      Top = 0
+      Width = 180
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      ClientHeight = 352
+      ClientWidth = 180
+      TabOrder = 1
+      object Memo1: TMemo
+        Left = 0
+        Height = 352
+        Top = 0
+        Width = 180
+        Align = alClient
+        Lines.Strings = (
+          'Memo1'
+        )
+        ScrollBars = ssAutoBoth
+        TabOrder = 0
+        WordWrap = False
+      end
+    end
+    object Panel3: TPanel
+      Left = 185
+      Height = 352
+      Top = 0
+      Width = 476
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Panel3'
+      ClientHeight = 352
+      ClientWidth = 476
+      TabOrder = 2
+      object Memo2: TMemo
+        Left = 0
+        Height = 352
+        Top = 0
+        Width = 476
+        Align = alClient
+        Lines.Strings = (
+          'Memo2'
+        )
+        TabOrder = 0
+      end
+    end
+  end
+  object StringGrid1: TStringGrid
+    Left = 8
+    Height = 86
+    Top = 400
+    Width = 661
+    ColCount = 3
+    Columns = <    
+      item
+        Title.Caption = 'Title'
+      end    
+      item
+        Title.Caption = 'Title'
+        Width = 128
+      end    
+      item
+        Title.Caption = 'Title'
+        Width = 450
+      end>
+    DefaultColWidth = 64
+    FixedCols = 0
+    FixedRows = 0
+    Flat = True
+    Options = [goFixedHorzLine, goHorzLine, goRowSelect, goSmoothScroll]
+    RangeSelectMode = rsmMulti
+    RowCount = 0
     TabOrder = 5
+    TitleStyle = tsNative
   end
   object MainMenu: TMainMenu
     object ConnectItem: TMenuItem

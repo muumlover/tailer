@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ActnList, StdCtrls,
-  Menus, ComCtrls, Buttons, ExtCtrls;
+  Menus, ComCtrls, Buttons, ExtCtrls, PairSplitter, Grids, ValEdit;
 
 type
 
@@ -17,10 +17,15 @@ type
     Btn2: TButton;
     CBProtocols: TComboBox;
     CB2: TComboBox;
-    ListBox1: TListBox;
     MainMenu: TMainMenu;
-    Memo1: TMemo;
     ConnectItem: TMenuItem;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Splitter1: TSplitter;
+    StringGrid1: TStringGrid;
     TestItem: TMenuItem;
   private
 
