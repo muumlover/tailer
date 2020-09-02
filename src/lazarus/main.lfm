@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 514
+  Left = 621
   Height = 513
-  Top = 112
+  Top = 96
   Width = 680
   Caption = 'MessageTool'
   ClientHeight = 493
@@ -115,6 +115,7 @@ object MainForm: TMainForm
     Height = 86
     Top = 400
     Width = 661
+    Anchors = [akLeft, akRight, akBottom]
     ColCount = 3
     Columns = <    
       item

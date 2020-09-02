@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="go build tailer/src" type="GoApplicationRunConfiguration"
+                   factoryName="Go Application" nameIsGenerated="true">
+        <module name="tailer"/>
+        <working_directory value="$PROJECT_DIR$"/>
+        <kind value="PACKAGE"/>
+        <filePath value="$PROJECT_DIR$/src/main.go"/>
+        <package value="tailer/src"/>
+        <directory value="$PROJECT_DIR$"/>
+        <output_directory value="$PROJECT_DIR$"/>
+        <method v="2">
+            <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_convert.bat"/>
+        </method>
+    </configuration>
+</component>

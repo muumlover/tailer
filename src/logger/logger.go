@@ -15,12 +15,12 @@ const (
 )
 
 var (
-	debugLogger   = log.New(os.Stdout, "[DEBUG] ", log.LstdFlags|log.Llongfile)
-	traceLogger   = log.New(os.Stdout, "[TRACE] ", log.LstdFlags|log.Llongfile)
-	infoLogger    = log.New(os.Stdout, "[INFO] ", log.LstdFlags|log.Llongfile)
-	warningLogger = log.New(os.Stdout, "[WARNING] ", log.LstdFlags|log.Llongfile)
-	errorLogger   = log.New(os.Stdout, "[ERROR] ", log.LstdFlags|log.Llongfile)
-	fatalLogger   = log.New(os.Stdout, "[FATAL] ", log.LstdFlags|log.Llongfile)
+	debugLogger   = log.New(os.Stdout, "[DEBUG] ", log.LstdFlags|log.Lshortfile)
+	traceLogger   = log.New(os.Stdout, "[TRACE] ", log.LstdFlags|log.Lshortfile)
+	infoLogger    = log.New(os.Stdout, "[INFO] ", log.LstdFlags|log.Lshortfile)
+	warningLogger = log.New(os.Stdout, "[WARNING] ", log.LstdFlags|log.Lshortfile)
+	errorLogger   = log.New(os.Stdout, "[ERROR] ", log.LstdFlags|log.Lshortfile)
+	fatalLogger   = log.New(os.Stdout, "[FATAL] ", log.LstdFlags|log.Lshortfile)
 )
 
 func logger(level int) func(v ...interface{}) {
