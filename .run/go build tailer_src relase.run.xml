@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="go build tailer/src static" type="GoApplicationRunConfiguration"
+    <configuration default="false" name="go release tailer/src " type="GoApplicationRunConfiguration"
                    factoryName="Go Application">
         <module name="tailer"/>
         <working_directory value="$PROJECT_DIR$"/>
-        <go_parameters value="-i -tags tempdll"/>
+        <go_parameters value="-i -tags tempdll -ldflags=&quot;-s -w -H windowsgui&quot;"/>
         <kind value="PACKAGE"/>
         <filePath value="$PROJECT_DIR$/src/main.go"/>
         <package value="tailer/src"/>
