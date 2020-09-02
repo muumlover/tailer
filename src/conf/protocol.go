@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"tailer/src/logger"
 )
 
 const ProtocolPath = "protocols"
@@ -27,19 +28,19 @@ func NewProtocols() ([]*Protocol, error) {
 	}
 	files, err := ioutil.ReadDir(confPath)
 	if err != nil {
-		logger.Println("Read Protocols Error", err)
+		logger.Error("Read Protocols Error", err)
 		return nil, err
 	}
 	var protocols = make([]*Protocol, 0)
 	for i, f := range files {
-		logger.Println("Protocol", i, "=", f.Name())
+		logger.Trace("Protocol", i, "=", f.Name())
 		p, err := NewProtocol(f.Name())
 		if err != nil {
-			logger.Println("Load Protocol Error", err)
+			logger.Error("Load Protocol Error", err)
 			continue
 		}
 		protocols = append(protocols, p)
-		logger.Println("Protocol Loaded:", p)
+		logger.Trace("Protocol Loaded:", p)
 	}
 	return protocols, nil
 }
@@ -50,7 +51,7 @@ func NewProtocol(path string) (*Protocol, error) {
 	var confPath = configPath(ProtocolPath, path)
 	file, err := os.Open(confPath)
 	if err != nil {
-		logger.Println("Open Protocol Error:", err)
+		logger.Error("Open Protocol Error:", err)
 		return nil, err
 	}
 	defer file.Close()
@@ -58,38 +59,38 @@ func NewProtocol(path string) (*Protocol, error) {
 	decoder.UseNumber()
 	err = decoder.Decode(&protocol)
 	if err != nil {
-		logger.Println("Read Protocol Error:", err)
+		logger.Error("Read Protocol Error:", err)
 		return nil, err
 	}
-	logger.Println("Protocol", protocol.Name, "Loaded")
+	logger.Trace("Protocol", protocol.Name, "Loaded")
 	return protocol, nil
 }
 
 func (p Protocol) ToByte(data map[string]interface{}) ([]byte, error) {
 	buf := bytes.NewBuffer([]byte{})
-	logger.Println()
+	logger.Debug()
 	for index, field := range p.Head {
 		if field["name"] == nil {
 			return nil, errors.New("protocol head miss name at index[" + strconv.Itoa(index) + "]")
 		}
 		valueName := field["name"].(string)
-		logger.Println("valueName:", valueName)
+		logger.Debug("valueName:", valueName)
 
 		if field["type"] == nil {
 			return nil, errors.New("protocol head miss type at index[" + strconv.Itoa(index) + "]")
 		}
 		valueType := field["type"].(string)
-		logger.Println("valueType:", valueType)
+		logger.Debug("valueType:", valueType)
 
 		valueSize := 1
 		if field["size"] != nil {
 			size, _ := field["size"].(json.Number).Int64()
 			valueSize = int(size)
 		}
-		logger.Println("valueSize:", valueSize)
+		logger.Debug("valueSize:", valueSize)
 
 		valueDefault := field["default"]
-		logger.Println("valueDefault:", valueDefault)
+		logger.Debug("valueDefault:", valueDefault)
 
 		var value interface{}
 		if valueDefault != nil {
@@ -97,7 +98,7 @@ func (p Protocol) ToByte(data map[string]interface{}) ([]byte, error) {
 		} else {
 			value = data[valueName]
 		}
-		logger.Println("value:", value)
+		logger.Debug("value:", value)
 		if value == nil {
 			return nil, errors.New("miss field '" + valueName + "'")
 		}
@@ -107,26 +108,26 @@ func (p Protocol) ToByte(data map[string]interface{}) ([]byte, error) {
 		case "int32", "uint32", "int64", "uint64":
 			switch value.(type) {
 			case json.Number:
-				logger.Println("value is json.Number")
+				logger.Debug("value is json.Number")
 				valueI64, _ = value.(json.Number).Int64()
 			case float64:
-				logger.Println("value is float64")
+				logger.Debug("value is float64")
 				valueI64 = int64(value.(float64))
 			default:
-				logger.Println("value is error")
+				logger.Debug("value is error")
 			}
 		case "byte":
 			switch value.(type) {
 			case json.Number:
-				logger.Println("value is json.Number")
+				logger.Debug("value is json.Number")
 				valueI64, _ = value.(json.Number).Int64()
-				logger.Println("json.Number:", valueI64)
+				logger.Debug("json.Number:", valueI64)
 			default:
-				logger.Println("value is error")
+				logger.Debug("value is error")
 			}
 		}
 
-		logger.Println("valueI64:", valueI64)
+		logger.Debug("valueI64:", valueI64)
 
 		switch valueType {
 		case "int32":
@@ -141,7 +142,7 @@ func (p Protocol) ToByte(data map[string]interface{}) ([]byte, error) {
 			_ = binary.Write(buf, binary.LittleEndian, byte(valueI64))
 		}
 
-		logger.Println()
+		logger.Debug()
 	}
 	return buf.Bytes(), nil
 }

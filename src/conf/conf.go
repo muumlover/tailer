@@ -3,10 +3,8 @@ package conf
 import (
 	"encoding/json"
 	"os"
-	"tailer/src/util"
+	"tailer/src/logger"
 )
-
-var logger = util.Logger
 
 var configurationPath = "test.json"
 
@@ -26,7 +24,7 @@ func (c *Configuration) Load() {
 	}
 	file, err := os.Open(confPath)
 	if err != nil {
-		logger.Println("Open Config Error:", err)
+		logger.Error("Open Config Error:", err)
 		return
 	}
 	defer file.Close()
@@ -34,10 +32,10 @@ func (c *Configuration) Load() {
 	decoder.UseNumber()
 	err = decoder.Decode(&c)
 	if err != nil {
-		logger.Println("Load Config Error:", err)
+		logger.Error("Load Config Error:", err)
 		return
 	}
-	logger.Println("Config Loaded:", c)
+	logger.Trace("Config Loaded:", c)
 }
 
 //Save 保存设置
@@ -45,7 +43,7 @@ func (c *Configuration) Save() {
 	var confPath = configPath(configurationPath)
 	file, err := os.Create(confPath)
 	if err != nil {
-		logger.Println("Create Config Error:", err)
+		logger.Error("Create Config Error:", err)
 		return
 	}
 	defer file.Close()
@@ -53,7 +51,7 @@ func (c *Configuration) Save() {
 	encoder.SetIndent("", "  ")
 	err = encoder.Encode(c)
 	if err != nil {
-		logger.Println("Save Config Error:", err)
+		logger.Error("Save Config Error:", err)
 		return
 	}
 }
